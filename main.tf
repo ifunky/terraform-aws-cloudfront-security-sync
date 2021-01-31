@@ -41,6 +41,14 @@ data "archive_file" "update_security_groups" {
   output_path = data.null_data_source.lambda_archive.outputs.filename
 }
 
+resource "aws_cloudwatch_log_group" "default" {
+  count             = var.enabled ? 1 : 0
+  name              = "/aws/lambda/${aws_lambda_function.update_security_groups[count.index].function_name}"
+  retention_in_days = 90
+
+   # tags = merge(map( "Name", var.name), var.tags)
+}
+
 resource "aws_lambda_function" "update_security_groups" {
   count = var.enabled ? 1 : 0
   
@@ -60,5 +68,9 @@ resource "aws_lambda_function" "update_security_groups" {
       last_modified,
     ]
   }
+
+    depends_on = [
+    aws_cloudwatch_log_group.default,
+  ]
 
 }
