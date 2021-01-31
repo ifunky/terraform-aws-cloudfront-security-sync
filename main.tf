@@ -60,4 +60,8 @@ resource "aws_lambda_function" "update_security_groups" {
       last_modified,
     ]
   }
+
+  depends_on = [
+    aws_cloudwatch_log_group.default
+  ]  
 }
