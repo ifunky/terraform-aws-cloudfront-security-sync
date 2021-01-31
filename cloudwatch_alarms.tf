@@ -30,6 +30,10 @@ resource "aws_cloudwatch_log_metric_filter" "cloudfront_region_count" {
     namespace = local.metric_namespace
     value     = "1"
   }
+
+  depends_on = [
+    aws_cloudwatch_log_group.default
+  ]  
 }
 
 resource "aws_cloudwatch_metric_alarm" "lambda_error" {
