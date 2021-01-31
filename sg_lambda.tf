@@ -56,16 +56,23 @@ resource "aws_iam_role" "lambda_sec_group_update" {
   assume_role_policy = data.aws_iam_policy_document.assume_role_lambda[0].json
 }
 
+resource "aws_cloudwatch_log_group" "default" {
+  count             = var.enabled ? 1 : 0
+  name              = "aws/lambda/${aws_lambda_function.update_security_groups[count.index].function_name}"
+  retention_in_days = 90
+
+   # tags = merge(map( "Name", var.name), var.tags)
+}
 resource "aws_iam_policy" "lambda_sec_group_update" {
-  count  = var.enabled ? 1 : 0
+  count       = var.enabled ? 1 : 0
   name        = "lambda_sec_group_update"
   description = "Policy that enables Lambda to update security groups"
 
-  policy = data.aws_iam_policy_document.lambda_secgroup_updater[0].json
+  policy      = data.aws_iam_policy_document.lambda_secgroup_updater[0].json
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_sec_group_update_attach" {
-  count  = var.enabled ? 1 : 0
+  count      = var.enabled ? 1 : 0
   role       = aws_iam_role.lambda_sec_group_update[0].name
   policy_arn = aws_iam_policy.lambda_sec_group_update[0].arn
 }
