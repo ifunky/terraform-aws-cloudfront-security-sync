@@ -106,7 +106,7 @@ In order for the Lambda function to find the correct security groups to dynamica
 ## Usage
 ```hcl
 module "cloudfront_lambda_updater" {
-  source = ""git::https://github.com/ifunky/terraform-aws-cloudfront-security-sync.git?ref=master"
+  source = "git::https://github.com/ifunky/terraform-aws-cloudfront-security-sync.git?ref=master"
 
   region              = "eu-west-1"
   iam_role_name       = "lambda_sec_group_updater"
@@ -114,7 +114,7 @@ module "cloudfront_lambda_updater" {
   sns_alarm_info_arn  = "arn:aws:sns:eu-west-1:123456789012:audit-info-dev"
 
   providers = {
-      aws.us-east-1 = "aws.us-east-1"
+      aws.us-east-1 = aws.us-east-1
   }
 
   tags = {
