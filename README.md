@@ -72,7 +72,7 @@ In order for the Lambda function to find the correct security groups to dynamica
     }
 
     lifecycle { 
-      ignore_changes = ["ingress"] 
+      ignore_changes = [ingress] 
     }      
   }
 

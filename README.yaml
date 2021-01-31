@@ -79,7 +79,7 @@ description: |-
       }
 
       lifecycle { 
-        ignore_changes = ["ingress"] 
+        ignore_changes = [ingress] 
       }      
     }
 
@@ -103,7 +103,7 @@ description: |-
       }
 
       lifecycle { 
-        ignore_changes = ["ingress"] 
+        ignore_changes = [ingress] 
       }      
     }    
   ```
