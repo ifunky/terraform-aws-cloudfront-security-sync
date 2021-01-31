@@ -58,7 +58,7 @@ resource "aws_iam_role" "lambda_sec_group_update" {
 
 resource "aws_cloudwatch_log_group" "default" {
   count             = var.enabled ? 1 : 0
-  name              = "aws/lambda/${aws_lambda_function.update_security_groups[count.index].function_name}"
+  name              = "/aws/lambda/${aws_lambda_function.update_security_groups[count.index].function_name}"
   retention_in_days = 90
 
    # tags = merge(map( "Name", var.name), var.tags)
