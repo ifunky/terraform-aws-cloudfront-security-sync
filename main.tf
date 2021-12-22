@@ -45,8 +45,6 @@ resource "aws_cloudwatch_log_group" "default" {
   count             = var.enabled ? 1 : 0
   name              = "/aws/lambda/${aws_lambda_function.update_security_groups[count.index].function_name}"
   retention_in_days = 90
-
-   # tags = merge(map( "Name", var.name), var.tags)
 }
 
 resource "aws_lambda_function" "update_security_groups" {
@@ -59,7 +57,7 @@ resource "aws_lambda_function" "update_security_groups" {
   role             = aws_iam_role.lambda_sec_group_update[0].arn
   handler          = "update_security_groups.lambda_handler"
   source_code_hash = data.archive_file.update_security_groups[0].output_base64sha256
-  runtime          = "python2.7"
+  runtime          = "python3.6"
   timeout          = 15
 
   lifecycle {
