@@ -1,10 +1,5 @@
-provider "aws" {
-  alias  = "us-east-1"
-}
-
 resource "aws_sns_topic_subscription" "sns_notify_ip_space_changed" {
   count = var.enabled ? 1 : 0
-  provider = aws.us-east-1
 
   topic_arn = var.sns_ip_change_topic
   protocol  = "lambda"

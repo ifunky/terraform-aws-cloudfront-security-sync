@@ -51,7 +51,6 @@ resource "aws_cloudwatch_metric_alarm" "lambda_error" {
       FunctionName = "update_security_groups_for_cloudfront"
       Resource = "update_security_groups_for_cloudfront"
     }
-#depends_on = [aws_cloudwatch_log_metric_filter.cloudfront_global_count]
 }
 
 resource "aws_cloudwatch_metric_alarm" "lambda_info" {
