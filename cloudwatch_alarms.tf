@@ -1,8 +1,8 @@
 locals {
     sns_error_topic_arn = var.sns_alarm_error_arn
     sns_info_topic_arn  = var.sns_alarm_error_arn
-    error_endpoints     = distinct(compact(concat(tolist(local.sns_error_topic_arn), var.additional_error_endpoint_arns)))
-    info_endpoints      = distinct(compact(concat(tolist(local.sns_info_topic_arn), var.additional_info_endpoint_arns)))
+    error_endpoints     = distinct(compact(concat(tolist([local.sns_error_topic_arn]), var.additional_error_endpoint_arns)))
+    info_endpoints      = distinct(compact(concat(tolist([local.sns_info_topic_arn]), var.additional_info_endpoint_arns)))
 
     metric_namespace    = "CloudFrontIpSync"
     twenty_four_hours   = "86400"  # In seconds
