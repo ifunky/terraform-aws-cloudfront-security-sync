@@ -7,17 +7,13 @@ locals {
     metric_namespace    = "CloudFrontIpSync"
     twenty_four_hours   = "86400"  # In seconds
 
-    log_group_name      = "/aws/lambda/${var.function_name}"
-}
-
-resource "aws_cloudwatch_log_group" "count" {
-  name = local.log_group_name
 }
 
 resource "aws_cloudwatch_log_metric_filter" "cloudfront_global_count" {
+  count = var.enabled ? 1 : 0
   name           = "CloudFrontGlobalIpSyncHttpsCount"
   pattern        = "Found 1 CloudFront_g HttpsSecurityGroups to update"
-  log_group_name = aws_cloudwatch_log_group.count.name
+  log_group_name = aws_cloudwatch_log_group.default[count.index].name
 
   metric_transformation {
     name      = "CloudFrontGlobalIpSyncHttpsCount"
@@ -27,9 +23,10 @@ resource "aws_cloudwatch_log_metric_filter" "cloudfront_global_count" {
 }
 
 resource "aws_cloudwatch_log_metric_filter" "cloudfront_region_count" {
+  count = var.enabled ? 1 : 0
   name           = "CloudFrontRegionIpSyncHttpsCount"
   pattern        = "Found 1 CloudFront_r HttpsSecurityGroups to update"
-  log_group_name = "/aws/lambda/${var.function_name}"
+  log_group_name = aws_cloudwatch_log_group.default[count.index].name
 
   metric_transformation {
     name      = "CloudFrontRegionIpSyncHttpsCount"
